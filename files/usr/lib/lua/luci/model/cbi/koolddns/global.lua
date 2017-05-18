@@ -50,8 +50,13 @@ e.width="15%"
 e.template="koolddns/url"
 e.cfgvalue=function(t,o)
 local t=a.uci:get(i,o,"interface")or""
-local a=a.uci:get(i,o,"ipurl")or""
-if t=="url"then return a end
+local b=a.uci:get(i,o,"ipurl")or""
+local c=a.uci:get(i,o,"urlinterface")or""
+if t=="url"then
+c=luci.sys.exec("uci -P /var/state get network.%s.ifname 2>/dev/null"%c)or""
+if c==""then return""end
+c=luci.sys.exec("curl --interface %q -s %q 2>&1"%{c,b})or""
+return c end
 if t==""then return""end
 local t=luci.sys.exec("uci -P /var/state get network.%s.ifname 2>/dev/null"%t)or""
 if t==""then return""end
@@ -61,7 +66,13 @@ end
 e=t:option(DummyValue,"nslookupip",translate("Nslookup").." IP")
 e.width="15%"
 e.template="koolddns/domain"
-e.cfgvalue=function(t,t)
+e.cfgvalue=function(t,n)
+local t=a.uci:get(i,n,"domain")or""
+local a=a.uci:get(i,n,"name")or""
+if t==""or a==""then return""end
+if a=="@" then o="%s"%{t} return o end
+if a=="*" then o="%s.%s"%{"testabc1de",t} return o end
+o="%s.%s"%{a,t}
 return o
 end
 e=t:option(Flag,"enable",translate("Enable State"))

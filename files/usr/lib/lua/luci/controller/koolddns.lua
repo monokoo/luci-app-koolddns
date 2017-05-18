@@ -18,7 +18,8 @@ end
 function act_curl()
 local e={}
 e.index=luci.http.formvalue("index")
-e.value=luci.sys.exec("curl -s %q 2>&1"%luci.http.formvalue("url"))
+--e.value=luci.sys.exec("curl -s %q 2>&1"%luci.http.formvalue("url"))
+e.value=luci.http.formvalue("url")
 luci.http.prepare_content("application/json")
 luci.http.write_json(e)
 end

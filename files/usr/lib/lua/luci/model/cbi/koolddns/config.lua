@@ -1,6 +1,7 @@
 local n="koolddns"
 local i=require"luci.dispatcher"
 local o=require"luci.model.network".init()
+local m=require"nixio.fs"
 local a,t,e
 arg[1]=arg[1]or""
 a=Map(n,translate("Koolddns Config"))
@@ -19,9 +20,15 @@ e.rmempty=false
 e=t:option(Value,"name",translate("Sub Domain"))
 e.rmempty=false
 e=t:option(ListValue,"service",translate("Service Providers"))
+if m.access("/usr/bin/klaliddns")then
 e:value("aliddns",translate("AliDDNS"))
+end
+if m.access("/usr/bin/klcloudxns")then
 e:value("cloudxns",translate("CloudXNS"))
+end
+if m.access("/usr/bin/kldnspod")then
 e:value("dnspod",translate("DNSPOD"))
+end
 e.rmempty=false
 e=t:option(Value,"accesskey",translate("Access Key"))
 e.rmempty=false
