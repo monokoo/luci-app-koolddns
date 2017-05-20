@@ -71,7 +71,6 @@ local t=a.uci:get(i,n,"domain")or""
 local a=a.uci:get(i,n,"name")or""
 if t==""or a==""then return""end
 if a=="@" then o="%s"%{t} return o end
-if a=="*" then o="%s.%s"%{"testabc1de",t} return o end
 o="%s.%s"%{a,t}
 return o
 end
