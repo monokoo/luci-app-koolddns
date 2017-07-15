@@ -13,6 +13,9 @@ local e={}
 e.index=luci.http.formvalue("index")
 --e.value=luci.sys.exec("nslookup %q localhost 2>&1|grep 'Address 1:'|tail -n1|cut -d' ' -f3"%luci.http.formvalue("domain"))
 e.value=luci.sys.exec("dig %q 2>&1 |grep 'IN'|awk '{print $5}'|grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'|head -n1"%luci.http.formvalue("domain"))
+if e.value=="" then
+e.value="127.0.0.1"
+end
 luci.http.prepare_content("application/json")
 luci.http.write_json(e)
 end
