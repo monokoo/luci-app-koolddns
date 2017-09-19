@@ -88,7 +88,7 @@ luci.http.redirect(luci.dispatcher.build_url("admin","services","koolddns"))
 end
 e=t:option(TextValue,"log")
 e.rows=20
-e.wrap="on"
+e.wrap="off"
 e.readonly=true
 e.cfgvalue=function(t,t)
 return s.readfile("/var/log/koolddns.log")or""
