@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-koolddns
 PKG_VERSION:=20170517
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_MAINTAINER:=fw867
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -62,7 +62,9 @@ define Package/$(PKG_NAME)/install
 	
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/koolddns
 	$(INSTALL_DATA) ./files/usr/lib/lua/luci/view/koolddns/* $(1)/usr/lib/lua/luci/view/koolddns/
-
+	
+	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
+	$(INSTALL_DATA) ./files/usr/share/rpcd/acl.d/* $(1)/usr/share/rpcd/acl.d
 
 endef
 
